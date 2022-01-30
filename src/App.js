@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Audio from "./audio";
+import "./styles.css";
 
 function App() {
+  const [username, setUsername] = useState("");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <h1>Welcome To Maze Solver!</h1>
+      <div>
+        <label htmlFor="username">Username: </label>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          name="username"
+        />
+      </div>
+      <h2>
+        {username === ""
+          ? `To proceed, please enter your username above`
+          : `To proceed, click the button below your voice while saying:
+        "My name is __" and your name`}
+      </h2>
+      <Audio username={username} />
+    </main>
   );
 }
 

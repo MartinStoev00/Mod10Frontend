@@ -1,0 +1,93 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: purple;
+}
+
+h1 {
+  color: #fff;
+  font-family: arial, sans-serif;
+  font-size: 42px;
+  padding: 80px 0;
+}
+
+h2 {
+  color: #fff;
+  font-family: arial, sans-serif;
+  font-size: 20px;
+  text-align: center;
+  margin: 30px 0;
+  max-width: 53ch;
+}
+
+input {
+  border: none;
+  padding: 10px 5px;
+  border-radius: 35px;
+  width: 250px;
+  font-size: 20px;
+}
+
+input:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  cursor: auto;
+}
+
+label {
+  color: #fff;
+  font-family: arial, sans-serif;
+  font-size: 20px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: center;
+}
+
+.audio-button {
+  padding: 10px 10px;
+  border: none;
+  border-radius: 20px;
+  width: 60px;
+  height: 80px;
+  color: purple;
+}
+
+.audio-button:enabled:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+}
+
+audio {
+  margin: 30px 0;
+}
+
+.auth-div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-content: stretch;
+  align-items: center;
+}
+
+.auth-button {
+  padding: 10px 5px;
+  font-size: 15px;
+  width: 130px;
+  font-weight: 600;
+  border-radius: 15px;
+  border: none;
+}
+
+.auth-button:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+}
