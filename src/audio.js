@@ -28,11 +28,11 @@ const Audio = ({ username }) => {
             onClick={startRecording}
             disabled={username === ""}
           >
-            <img src="/microphone-alt-solid.svg" alt="start" />
+            Start
           </button>
         ) : (
           <button className="audio-button" onClick={stopRecording}>
-            <img src="/pause-solid.svg" alt="pause" />
+            Stop
           </button>
         )}
       </div>
@@ -40,12 +40,16 @@ const Audio = ({ username }) => {
         <div>
           <audio controls src={audioResult} />
           {loading && (
-            <div style={{ margin: "0 calc(50% - 30px)" }}>
-              <img
-                style={{ width: "60px" }}
-                src="/Youtube_loading_symbol_1_(wobbly).gif"
-                alt="loading"
-              />
+            <div
+              style={{
+                textAlign: "center",
+                fontWeight: "600",
+                color: "white",
+                fontFamily: "arial",
+                fontSize: "20px",
+              }}
+            >
+              Loading...
             </div>
           )}
           {!loading && (

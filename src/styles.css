@@ -40,6 +40,7 @@ label {
   color: #fff;
   font-family: arial, sans-serif;
   font-size: 20px;
+  font-weight: 600;
 }
 
 main {
@@ -52,12 +53,11 @@ main {
 }
 
 .audio-button {
-  padding: 10px 10px;
+  padding: 10px 20px;
   border: none;
   border-radius: 20px;
-  width: 60px;
-  height: 80px;
-  color: purple;
+  font-weight: 600;
+  font-size: 20px;
 }
 
 .audio-button:enabled:hover {
