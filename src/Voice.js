@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles.css";
 import Command from "./Command";
+import ScoreBoard from "./ScoreBoard";
 
 export default function Voice() {
   let navigate = useNavigate();
@@ -24,6 +25,7 @@ export default function Voice() {
         Log Out
       </button>
       <Command />
+      <ScoreBoard />
     </main>
   );
 }

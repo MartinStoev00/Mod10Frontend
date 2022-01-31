@@ -31,3 +31,29 @@ const sendFile = async (aud, endpoint, username) => {
 };
 
 export default sendFile;
+
+export const sendScore = (scoreNum) => {
+  fetch(`http://localhost:5000/score`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      user_id: localStorage.getItem("userID"),
+      score: scoreNum,
+    }),
+  });
+};
+
+export const getScore = async () => {
+  try {
+    const res = await fetch(`http://localhost:5000/score`, {
+      method: "GET",
+    });
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log(err);
+    return { error: err };
+  }
+};
