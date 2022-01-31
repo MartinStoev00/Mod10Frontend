@@ -1,10 +1,12 @@
 import { useAudioRecorder } from "@sarafhbk/react-audio-recorder";
 import sendFile from "./utils";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Audio = ({ username }) => {
   const { audioResult, startRecording, stopRecording, status } =
     useAudioRecorder();
+  let navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
@@ -16,6 +18,7 @@ const Audio = ({ username }) => {
       alert(ans.error);
     } else {
       localStorage.setItem("userID", ans.res);
+      navigate(`/voice`);
     }
   };
 
@@ -36,40 +39,40 @@ const Audio = ({ username }) => {
           </button>
         )}
       </div>
-      {audioResult && (
-        <div>
-          <audio controls src={audioResult} />
-          {loading && (
-            <div
-              style={{
-                textAlign: "center",
-                fontWeight: "600",
-                color: "white",
-                fontFamily: "arial",
-                fontSize: "20px",
-              }}
+      <div>
+        <audio controls src={audioResult} />
+        {loading && (
+          <div
+            style={{
+              textAlign: "center",
+              fontWeight: "600",
+              color: "white",
+              fontFamily: "arial",
+              fontSize: "20px",
+            }}
+          >
+            Loading...
+          </div>
+        )}
+        {!loading && (
+          <div className="auth-div">
+            <button
+              className="auth-button"
+              onClick={() => auth(audioResult, "signup", username)}
+              disabled={!!!audioResult}
             >
-              Loading...
-            </div>
-          )}
-          {!loading && (
-            <div className="auth-div">
-              <button
-                className="auth-button"
-                onClick={() => auth(audioResult, "signup", username)}
-              >
-                Sign Up
-              </button>
-              <button
-                className="auth-button"
-                onClick={() => auth(audioResult, "login", username)}
-              >
-                Log In
-              </button>
-            </div>
-          )}
-        </div>
-      )}
+              Sign Up
+            </button>
+            <button
+              className="auth-button"
+              onClick={() => auth(audioResult, "login", username)}
+              disabled={!!!audioResult}
+            >
+              Log In
+            </button>
+          </div>
+        )}
+      </div>
     </>
   );
 };
