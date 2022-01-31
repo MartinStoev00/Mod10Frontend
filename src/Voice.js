@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles.css";
+import Command from "./Command";
 
 export default function Voice() {
   let navigate = useNavigate();
@@ -9,19 +10,6 @@ export default function Voice() {
       navigate(`/`);
     }
   });
-
-  const sendScore = async () => {
-    const response = await fetch(`http://localhost:5000/score`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: localStorage.getItem("userID"),
-        score: 123,
-      }),
-    });
-  };
 
   return (
     <main style={{ padding: "1rem 0" }}>
@@ -35,9 +23,7 @@ export default function Voice() {
       >
         Log Out
       </button>
-      <button className="auth-button" onClick={sendScore}>
-        Send
-      </button>
+      <Command />
     </main>
   );
 }
