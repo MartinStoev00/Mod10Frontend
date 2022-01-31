@@ -8,7 +8,7 @@ const ScoreBoard = () => {
     (async () => {
       const res = await getScore();
       const ans = res.res.sort((a, b) => {
-        return b.score - a.score;
+        return a.score - b.score;
       });
       setScores(ans);
     })();
@@ -19,7 +19,7 @@ const ScoreBoard = () => {
       <h3>Best Scores: </h3>
       {scores.map(({ score, user_id }) => (
         <div key={user_id}>
-          <span>{user_id}:</span>
+          <span>{user_id}</span>
           <span>{score}</span>
         </div>
       ))}
