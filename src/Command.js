@@ -22,7 +22,7 @@ const Command = () => {
 
   useEffect(() => {
     SpeechRecognition.startListening();
-  }, []);
+  });
   useEffect(() => {
     const filtered = transcript
       .split(" ")
