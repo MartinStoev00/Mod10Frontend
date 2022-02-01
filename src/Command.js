@@ -25,9 +25,10 @@ let started = 0;
 const socket = io("http://192.168.137.83:5000");
 socket.on("finish", (args) => {
   const now = Date.now();
-  const duration = started - now;
+  const duration = Math.round((now - started) / 1000);
   console.log("Finished at:", now, "It took:", duration);
-  // sendScore(args)
+  alert(`Finished! You did it in ${duration} seconds`);
+  sendScore(duration);
 });
 
 const Command = () => {
@@ -47,6 +48,7 @@ const Command = () => {
     if (filtered.length > 0) {
       if (started === 0) {
         started = Date.now();
+        console.log(started);
         socket.emit("manual", "hiiii");
       }
       console.log(filtered);
