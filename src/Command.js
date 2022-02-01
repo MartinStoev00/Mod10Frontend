@@ -2,8 +2,8 @@ import { useEffect, useRef } from "react";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
 import { sendScore } from "./utils";
+import { useNavigate } from "react-router-dom";
 
 const commands = [
   "left",
@@ -15,24 +15,41 @@ const commands = [
   "and",
   "bad",
   "go",
+  "make",
 ];
 for (let v = 10; v <= 180; v++) {
   commands.push("" + v);
 }
 
+let made = false;
+let finished = false;
+let beeped = false;
+
 let started = 0;
 
-const socket = io("http://192.168.137.83:5000");
-socket.on("finish", (args) => {
-  const now = Date.now();
-  const duration = Math.round((now - started) / 1000);
-  console.log("Finished at:", now, "It took:", duration);
-  alert(`Finished! You did it in ${duration} seconds`);
-  sendScore(duration);
-});
-
-const Command = () => {
+const Command = ({ socket }) => {
   const { transcript } = useSpeechRecognition();
+  let navigate = useNavigate();
+
+  socket.once("beep", (args) => {
+    if (!beeped) {
+      started = started - 100000;
+      console.log("Line Crossed! Lose 100 points!");
+      socket.off("beep");
+      beeped = true;
+    }
+  });
+  socket.once("finish", (args) => {
+    if (!finished) {
+      const now = Date.now();
+      const duration = Math.round((now - started) / 1000);
+      console.log("Finished at:", now, "It took:", duration);
+      sendScore(duration);
+      socket.off("finish");
+      finished = true;
+      navigate(`/`);
+    }
+  });
 
   useEffect(() => {
     SpeechRecognition.startListening();
@@ -46,17 +63,23 @@ const Command = () => {
       .replace("write", "right")
       .replace("and", "end");
     if (filtered.length > 0) {
-      if (started === 0) {
-        started = Date.now();
-        console.log(started);
-        socket.emit("manual", "hiiii");
-      }
       console.log(filtered);
       fil.current = filtered;
-      if (filtered.includes("go")) {
-        socket.emit("go", "hiiii");
-      } else {
+      if (filtered.includes("end")) {
         socket.emit("message", { time: Date.now(), text: filtered });
+      } else if (filtered.includes("make")) {
+        socket.emit("setup", "setup");
+        made = true;
+      } else if (filtered.includes("go")) {
+        socket.emit("go", "go");
+      } else if (made) {
+        if (started === 0) {
+          started = Date.now();
+          console.log(started);
+          socket.emit("manual", "manual");
+        } else {
+          socket.emit("message", { time: Date.now(), text: filtered });
+        }
       }
     }
   }, [transcript]);
