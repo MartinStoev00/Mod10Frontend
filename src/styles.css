@@ -84,6 +84,7 @@ audio {
   width: 130px;
   font-weight: 600;
   border-radius: 15px;
+  margin: 20px 0;
   border: none;
 }
 

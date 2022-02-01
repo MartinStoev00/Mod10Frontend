@@ -15,6 +15,8 @@ export default function Voice() {
   return (
     <main style={{ padding: "1rem 0" }}>
       <h2>User Talking: {localStorage.getItem("userID")}</h2>
+      <Command />
+      <ScoreBoard />
       <button
         onClick={() => {
           localStorage.removeItem("userID");
@@ -24,8 +26,6 @@ export default function Voice() {
       >
         Log Out
       </button>
-      <Command />
-      <ScoreBoard />
     </main>
   );
 }

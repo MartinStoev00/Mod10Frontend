@@ -20,7 +20,7 @@ const ScoreBoard = () => {
       {scores.map(({ score, user_id }) => (
         <div key={user_id}>
           <span>{user_id}</span>
-          <span>{score}</span>
+          <span>{score}s</span>
         </div>
       ))}
     </div>

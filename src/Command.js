@@ -5,17 +5,30 @@ import SpeechRecognition, {
 import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
 import { sendScore } from "./utils";
 
-const socket = io("http://192.168.137.83:5000");
-
-// socket.on("calc", (args) => {
-//   console.log(args);
-//   // sendScore(args)
-// });
-
-const commands = ["left", "right", "write", "back", "start", "stop", "bad"];
+const commands = [
+  "left",
+  "right",
+  "write",
+  "back",
+  "start",
+  "end",
+  "and",
+  "bad",
+  "go",
+];
 for (let v = 10; v <= 180; v++) {
   commands.push("" + v);
 }
+
+let started = 0;
+
+const socket = io("http://192.168.137.83:5000");
+socket.on("finish", (args) => {
+  const now = Date.now();
+  const duration = started - now;
+  console.log("Finished at:", now, "It took:", duration);
+  // sendScore(args)
+});
 
 const Command = () => {
   const { transcript } = useSpeechRecognition();
@@ -29,11 +42,20 @@ const Command = () => {
       .split(" ")
       .filter((word) => commands.includes(word))
       .join(" ")
-      .replace("write", "right");
+      .replace("write", "right")
+      .replace("and", "end");
     if (filtered.length > 0) {
+      if (started === 0) {
+        started = Date.now();
+        socket.emit("manual", "hiiii");
+      }
       console.log(filtered);
       fil.current = filtered;
-      socket.emit("message", { time: Date.now(), text: filtered });
+      if (filtered.includes("go")) {
+        socket.emit("go", "hiiii");
+      } else {
+        socket.emit("message", { time: Date.now(), text: filtered });
+      }
     }
   }, [transcript]);
 
