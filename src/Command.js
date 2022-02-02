@@ -77,9 +77,8 @@ const Command = ({ socket }) => {
           started = Date.now();
           console.log(started);
           socket.emit("manual", "manual");
-        } else {
-          socket.emit("message", { time: Date.now(), text: filtered });
         }
+        socket.emit("message", { time: Date.now(), text: filtered });
       }
     }
   }, [transcript]);
