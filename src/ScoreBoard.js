@@ -2,7 +2,7 @@ import { getScore } from "./utils";
 import { useEffect } from "react";
 import { useState } from "react";
 
-const ScoreBoard = ({ socket }) => {
+const ScoreBoard = ({ finished }) => {
   const [scores, setScores] = useState(null);
   useEffect(() => {
     (async () => {
@@ -12,7 +12,7 @@ const ScoreBoard = ({ socket }) => {
       });
       setScores(ans);
     })();
-  }, []);
+  }, [finished]);
 
   return (
     <div className="board">

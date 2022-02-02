@@ -3,7 +3,6 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { sendScore } from "./utils";
-import { useNavigate } from "react-router-dom";
 
 const commands = [
   "left",
@@ -22,33 +21,31 @@ for (let v = 10; v <= 180; v++) {
 }
 
 let made = false;
-let finished = false;
-let beeped = false;
-
 let started = 0;
 
-const Command = ({ socket }) => {
+const Command = ({ socket, finished, setFinished }) => {
   const { transcript } = useSpeechRecognition();
-  let navigate = useNavigate();
 
-  socket.once("beep", (args) => {
-    if (!beeped) {
+  useEffect(() => {
+    socket.on("beep", (args) => {
       started = started - 100000;
       console.log("Line Crossed! Lose 100 points!");
+      alert("Line Crossed! Lose 100 points!");
+    });
+    socket.on("finish", async (args) => {
+      if (!finished) {
+        const now = Date.now();
+        const duration = Math.round((now - started) / 1000);
+        console.log("Finished at:", now, "It took:", duration);
+        await sendScore(duration);
+        setFinished(true);
+        alert("You finished! Your score is: " + duration);
+      }
+    });
+    return () => {
       socket.off("beep");
-      beeped = true;
-    }
-  });
-  socket.once("finish", (args) => {
-    if (!finished) {
-      const now = Date.now();
-      const duration = Math.round((now - started) / 1000);
-      console.log("Finished at:", now, "It took:", duration);
-      sendScore(duration);
       socket.off("finish");
-      finished = true;
-      navigate(`/`);
-    }
+    };
   });
 
   useEffect(() => {
@@ -81,7 +78,7 @@ const Command = ({ socket }) => {
         socket.emit("message", { time: Date.now(), text: filtered });
       }
     }
-  }, [transcript]);
+  }, [transcript, socket]);
 
   return <div className="transcript">{fil.current}</div>;
 };
