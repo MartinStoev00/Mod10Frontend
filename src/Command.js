@@ -15,6 +15,7 @@ const commands = [
   "bad",
   "go",
   "make",
+  "demo",
 ];
 for (let v = 10; v <= 180; v++) {
   commands.push("" + v);
@@ -69,6 +70,8 @@ const Command = ({ socket, finished, setFinished }) => {
         made = true;
       } else if (filtered.includes("go")) {
         socket.emit("go", "go");
+      } else if (filtered.includes("demo")) {
+        socket.emit("demo", "demo");
       } else if (made) {
         if (started === 0) {
           started = Date.now();

@@ -19,7 +19,7 @@ export default function Voice() {
   });
 
   return (
-    <main style={{ padding: "1rem 0" }}>
+    <main>
       <h2>User Talking: {localStorage.getItem("userID")}</h2>
       <Command socket={socket} finished={finished} setFinished={setFinished} />
       <ScoreBoard finished={finished} />
