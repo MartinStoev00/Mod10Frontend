@@ -4,12 +4,17 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Audio = ({ username }) => {
+  // deconstruct the react custom hook from "@sarafhbk/react-audio-recorder" to read the sound recorded
+  // and also get a start/stop recording function
   const { audioResult, startRecording, stopRecording, status } =
     useAudioRecorder();
   let navigate = useNavigate();
 
+  // set loading to true whenever the user submits the form and waits for a result
   const [loading, setLoading] = useState(false);
 
+  // a function which either sends a request to signup/login
+  // if successful navigate to the main page
   const auth = async (audioResult, enpoint, username) => {
     setLoading(true);
     const ans = await sendFile(audioResult, enpoint, username);
@@ -25,6 +30,7 @@ const Audio = ({ username }) => {
   return (
     <>
       <div>
+        {/* allow for "start" to show when not recording and "stop" while recording*/}
         {status !== "recording" ? (
           <button
             className="audio-button"
@@ -54,6 +60,8 @@ const Audio = ({ username }) => {
             Loading...
           </div>
         )}
+        {/* buttons which send a request when signup/login */}
+        {/* disabled if no recording provided */}
         {!loading && (
           <div className="auth-div">
             <button

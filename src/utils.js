@@ -1,3 +1,4 @@
+//convert blob (an audio file recorded and stored in the browser) to base64 data
 const blobToBase64 = (blob) => {
   const reader = new FileReader();
   reader.readAsDataURL(blob);
@@ -8,6 +9,7 @@ const blobToBase64 = (blob) => {
   });
 };
 
+// sending a request with audio data to a given combination of a endpoint (sigup/login) and username and returns the data
 const sendFile = async (aud, endpoint, username) => {
   try {
     let res = await fetch(aud).then((r) => r.blob());
@@ -32,6 +34,7 @@ const sendFile = async (aud, endpoint, username) => {
 
 export default sendFile;
 
+// send a POST request to the backend to store the result
 export const sendScore = (scoreNum) => {
   fetch(`http://localhost:5000/score`, {
     method: "POST",
@@ -45,6 +48,7 @@ export const sendScore = (scoreNum) => {
   });
 };
 
+// sends a GET request to the backend and returns the values of the scoreboard
 export const getScore = async () => {
   try {
     const res = await fetch(`http://localhost:5000/score`, {

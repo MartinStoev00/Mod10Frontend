@@ -3,7 +3,11 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 const ScoreBoard = ({ finished }) => {
+  // state of the scores:
   const [scores, setScores] = useState(null);
+  // useEffect which fires when the finished variable has changed
+  // it sends GET request and sets the state to the result received
+  // also sorts the scores ascendingly
   useEffect(() => {
     (async () => {
       const res = await getScore();
@@ -18,6 +22,7 @@ const ScoreBoard = ({ finished }) => {
     <div className="board">
       <h3>Best Scores: </h3>
       {scores != null &&
+        // maps all the scores to html components
         scores.map(({ score, user_id }) => (
           <div key={user_id}>
             <span>{user_id}</span>

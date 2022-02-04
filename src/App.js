@@ -4,8 +4,10 @@ import "./styles.css";
 import { useNavigate } from "react-router-dom";
 
 function App() {
+  // username which is displayed and changed whenever the user types
   const [username, setUsername] = useState("");
   let navigate = useNavigate();
+  // if a user has logged in, redirect to the main page
   useEffect(() => {
     if (localStorage.getItem("userID")) {
       navigate(`/voice`);
@@ -27,6 +29,7 @@ function App() {
         />
       </div>
       <h2>
+        {/* allow for the user to continue when they ae typed their name */}
         {username === ""
           ? `To proceed, please enter your username above`
           : `To proceed, click the button below and say:
