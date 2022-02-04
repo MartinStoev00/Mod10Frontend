@@ -12,7 +12,7 @@ const ScoreBoard = ({ finished }) => {
     (async () => {
       const res = await getScore();
       const ans = res.res.sort((a, b) => {
-        return a.score - b.score;
+        return b.score - a.score;
       });
       setScores(ans);
     })();

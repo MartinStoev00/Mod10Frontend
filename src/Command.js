@@ -44,7 +44,7 @@ const Command = ({ socket, finished, setFinished }) => {
     socket.on("finish", async (args) => {
       if (!finished) {
         const now = Date.now();
-        const duration = Math.round((now - started) / 1000);
+        const duration = Math.round(23 / Math.round((now - started) / 1000));
         console.log("Finished at:", now, "It took:", duration);
         await sendScore(duration);
         setFinished(true);
